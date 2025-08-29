@@ -2,13 +2,13 @@
 	<service>
 		<engineName>WordPress</engineName>
 		<engineLink>https://wordpress.org/</engineLink>
-		<homePageLink>https://applepark-iptv.com</homePageLink>
+		<homePageLink>https://zyminex.com</homePageLink>
 		<apis>
-			<api name="WordPress" blogID="1" preferred="true" apiLink="https://applepark-iptv.com/xmlrpc.php" />
-			<api name="Movable Type" blogID="1" preferred="false" apiLink="https://applepark-iptv.com/xmlrpc.php" />
-			<api name="MetaWeblog" blogID="1" preferred="false" apiLink="https://applepark-iptv.com/xmlrpc.php" />
-			<api name="Blogger" blogID="1" preferred="false" apiLink="https://applepark-iptv.com/xmlrpc.php" />
-				<api name="WP-API" blogID="1" preferred="false" apiLink="https://applepark-iptv.com/wp-json/" />
+			<api name="WordPress" blogID="1" preferred="true" apiLink="https://zyminex.com/xmlrpc.php" />
+			<api name="Movable Type" blogID="1" preferred="false" apiLink="https://zyminex.com/xmlrpc.php" />
+			<api name="MetaWeblog" blogID="1" preferred="false" apiLink="https://zyminex.com/xmlrpc.php" />
+			<api name="Blogger" blogID="1" preferred="false" apiLink="https://zyminex.com/xmlrpc.php" />
+				<api name="WP-API" blogID="1" preferred="false" apiLink="https://zyminex.com/wp-json/" />
 			</apis>
 	</service>
 </rsd>
