@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Checkout - APPLEPARK-IPTV</title>
+    <title>Mobile Money and Card Checkout - ApplePark</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -41,14 +41,14 @@
         
         .container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
         }
         
         header {
             text-align: center;
-            margin-bottom: 10px;
-            padding: 10px;
+            margin-bottom: 30px;
+            padding: 25px;
             background: white;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
@@ -84,10 +84,10 @@
             gap: 10px;
             color: var(--accent);
             font-weight: 600;
-            padding: 10px 20px;
+            padding: 8px 12px;
             background: rgba(76, 199, 89, 0.1);
             border-radius: 50px;
-            margin-top: 15px;
+            margin-top: 10px;
         }
         
         .checkout-container {
@@ -204,49 +204,53 @@
             }
         }
         
-        .payment-methods {
-            display: flex;
-            flex-direction: column;
+        .subscription-type {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 15px;
-            margin: 30px 0;
+            margin: 25px 0;
         }
         
-        .payment-option {
+        .subscription-option {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            padding: 18px;
+            justify-content: center;
+            padding: 20px;
             border: 2px solid var(--border);
             border-radius: var(--radius);
             cursor: pointer;
             transition: var(--transition);
-            background: white;
+            text-align: center;
         }
         
-        .payment-option:hover {
+        .subscription-option:hover {
             border-color: var(--primary);
             background: var(--secondary);
             transform: translateY(-2px);
         }
         
-        .payment-option.active {
+        .subscription-option.active {
             border-color: var(--primary);
             background: var(--secondary);
             box-shadow: 0 5px 15px rgba(67, 97, 238, 0.1);
         }
         
-        .payment-option input {
-            margin-right: 15px;
-            width: 20px;
-            height: 20px;
-            accent-color: var(--primary);
+        .subscription-option i {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 12px;
         }
         
-        .payment-icon {
-            font-size: 28px;
-            margin-right: 15px;
-            width: 40px;
-            text-align: center;
-            color: var(--primary);
+        .subscription-option h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+        
+        .subscription-option p {
+            color: var(--text-light);
+            font-size: 14px;
         }
         
         .payment-details {
@@ -254,12 +258,7 @@
             padding: 25px;
             border-radius: var(--radius);
             margin-top: 20px;
-            display: none;
             animation: fadeIn 0.4s ease-out;
-        }
-        
-        .payment-details.active {
-            display: block;
         }
         
         .product {
@@ -446,38 +445,6 @@
             background: var(--accent);
         }
         
-        /* Tooltip */
-        .tooltip {
-            position: relative;
-            display: inline-block;
-            margin-left: 8px;
-            color: var(--text-light);
-        }
-        
-        .tooltip .tooltip-text {
-            visibility: hidden;
-            width: 200px;
-            background: var(--text);
-            color: white;
-            text-align: center;
-            border-radius: 6px;
-            padding: 8px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 13px;
-            font-weight: normal;
-        }
-        
-        .tooltip:hover .tooltip-text {
-            visibility: visible;
-            opacity: 1;
-        }
-        
         /* Custom select arrow */
         select {
             appearance: none;
@@ -486,20 +453,114 @@
             background-position: right 16px center;
             background-size: 18px;
         }
+        
+        .provider-logos {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .provider-logo {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .provider-logo i {
+            font-size: 40px;
+            color: var(--primary);
+        }
+        
+        .instructions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-top: 25px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        .instructions h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        
+        .payment-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .payment-option:hover {
+            border-color: var(--primary);
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .payment-option.active {
+            border-color: var(--primary);
+            background: var(--secondary);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.1);
+        }
+        
+        .payment-option i {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+        
+        .payment-option h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+        
+        .payment-option p {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        
+        .payment-details.mobile-money, .payment-details.card-details {
+            display: none;
+        }
+        
+        .payment-details.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <!-- <div class="logo">
-				<img style="width: 200px; height: 200px;" src="/wp-content/uploads/2025/06/APPLE PARK LOGO cd-06.png" alt="">
-               
-            </div> -->
-				<!-- <img style="width: 200px; height: 200px;" src="/wp-content/uploads/2025/06/APPLE PARK LOGO cd-06.png" alt=""> -->
-                 <a href="/index.html">
-    <img style="width: 200px; height: 200px;" src="/wp-content/uploads/2025/06/APPLE PARK LOGO cd-06.png" alt="Apple Park Logo">
-</a>
-
+            <div class="logo">
+                <a href="/index.html">
+                <img width="200px" height="200px" src="/wp-content/uploads/2025/05/APPLE PARK LOGO cd-06.png" alt="">
+                </a>
+                <!-- <i class="fas fa-tv"></i>
+                APPLEPARK-IPTV -->
+            </div>
             <h1>Complete Your Purchase</h1>
             <div class="secure-notice">
                 <i class="fas fa-lock"></i>
@@ -509,47 +570,55 @@
         
         <div class="checkout-container">
             <div class="form-section">
-                <h2><i class="fas fa-credit-card"></i> Payment Method</h2>
+                <h2><i class="fas fa-money-check-alt"></i> Payment Details</h2>
                 
-                <div class="payment-methods">
-                    <div class="payment-option active" data-method="mobile">
-                        <input type="radio" name="payment-method" id="mobile-money" checked>
-                        <div class="payment-icon">
-                            <i class="fas fa-mobile-alt"></i>
-                        </div>
-                        <div>
-                            <label for="mobile-money">Mobile Money</label>
-                            <p>Pay with MTN or Airtel Money</p>
-                        </div>
+                <div class="subscription-type">
+                    <div class="subscription-option active" data-type="new">
+                        <i class="fas fa-plus-circle"></i>
+                        <h3>New Subscription</h3>
+                        <p>Start a new IPTV service</p>
                     </div>
-                    
-                    <div class="payment-option" data-method="card">
-                        <input type="radio" name="payment-method" id="credit-card">
-                        <div class="payment-icon">
-                            <i class="far fa-credit-card"></i>
-                        </div>
-                        <div>
-                            <label for="credit-card">Credit/Debit Card</label>
-                            <p>Pay with Visa, Mastercard, or American Express</p>
-                        </div>
+                    <div class="subscription-option" data-type="renew">
+                        <i class="fas fa-sync-alt"></i>
+                        <h3>Renew Subscription</h3>
+                        <p>Extend your existing service</p>
                     </div>
-                    
-                    <!-- <div class="payment-option" data-method="paypal">
-                        <input type="radio" name="payment-method" id="paypal">
-                        <div class="payment-icon">
-                            <i class="fab fa-paypal"></i>
-                        </div>
-                        <div>
-                            <label for="paypal">PayPal</label>
-                            <p>Pay with your PayPal account</p>
-                        </div>
-                    </div> -->
                 </div>
                 
-                <div class="payment-details active" id="mobile-details">
-                    <h3>Mobile Money Details</h3>
+                <div class="form-group">
+                    <label for="customer-name">user name</label>
+                    <div class="input-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="customer-name" placeholder="Enter your name">
+                    </div>
+                    <div class="error-message">Please enter your name</div>
+                </div>
+                
+                <div class="subscription-type payment-methods">
+                    <div class="payment-option active" data-payment="mobile">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Mobile Money</h3>
+                        <p>Pay via mobile network</p>
+                    </div>
+                    <div class="payment-option" data-payment="card">
+                        <i class="fas fa-credit-card"></i>
+                        <h3>Visa/Debit Card</h3>
+                        <p>Pay with your card</p>
+                    </div>
+                </div>
+                
+                <div class="payment-details mobile-money active">
+                    <div class="provider-logos">
+                        <div class="provider-logo">
+                            <i class="fas fa-sim-card"></i>
+                        </div>
+                        <div class="provider-logo">
+                            <i class="fas fa-wifi"></i>
+                        </div>
+                    </div>
+                    
                     <div class="form-group">
-                        <label for="mobile-provider">Provider</label>
+                        <label for="mobile-provider">Mobile Network Provider</label>
                         <div class="input-icon">
                             <i class="fas fa-sim-card"></i>
                             <select id="mobile-provider">
@@ -560,6 +629,7 @@
                         </div>
                         <div class="error-message">Please select a provider</div>
                     </div>
+                    
                     <div class="form-group">
                         <label for="mobile-number">Mobile Number</label>
                         <div class="input-icon">
@@ -570,124 +640,52 @@
                     </div>
                 </div>
                 
-                <div class="payment-details" id="card-details">
-                    <h3>Card Details</h3>
+                <div class="payment-details card-details">
                     <div class="form-group">
                         <label for="card-number">Card Number</label>
                         <div class="input-icon">
-                            <i class="far fa-credit-card"></i>
+                            <i class="fas fa-credit-card"></i>
                             <input type="text" id="card-number" placeholder="1234 5678 9012 3456">
                         </div>
                         <div class="error-message">Please enter a valid card number</div>
                     </div>
+                    
                     <div class="input-row">
                         <div class="form-group">
-                            <label for="expiry-date">Expiry Date</label>
+                            <label for="card-expiry">Expiration Date</label>
                             <div class="input-icon">
-                                <i class="far fa-calendar-alt"></i>
-                                <input type="text" id="expiry-date" placeholder="MM/YY">
+                                <i class="fas fa-calendar"></i>
+                                <input type="text" id="card-expiry" placeholder="MM/YY">
                             </div>
-                            <div class="error-message">Invalid expiry date</div>
+                            <div class="error-message">Please enter a valid expiration date</div>
                         </div>
+                        
                         <div class="form-group">
-                            <label for="cvv">CVV</label>
+                            <label for="card-cvc">CVC</label>
                             <div class="input-icon">
                                 <i class="fas fa-lock"></i>
-                                <input type="text" id="cvv" placeholder="123">
+                                <input type="text" id="card-cvc" placeholder="123">
                             </div>
-                            <div class="error-message">Invalid CVV</div>
+                            <div class="error-message">Please enter a valid CVC</div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="card-name">Name on Card</label>
-                        <div class="input-icon">
-                            <i class="far fa-user"></i>
-                            <input type="text" id="card-name" placeholder="John Doe">
-                        </div>
-                        <div class="error-message">Please enter the name on your card</div>
                     </div>
                 </div>
                 
-                <div class="payment-details" id="paypal-details">
-                    <h3>PayPal Payment</h3>
-                    <p>You will be redirected to PayPal to complete your payment securely.</p>
-                    <div style="background: #f9f9f9; padding: 15px; border-radius: var(--radius); margin-top: 15px; display: flex; align-items: center;">
-                        <i class="fab fa-paypal" style="color: #0070ba; font-size: 28px; margin-right: 15px;"></i>
-                        <span>Click "Complete Purchase" to proceed to PayPal</span>
-                    </div>
-                </div>
-                
-                <h2 style="margin-top: 40px;"><i class="fas fa-user"></i> Billing Details</h2>
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <div class="input-icon">
-                        <i class="far fa-envelope"></i>
-                        <input type="email" id="email" placeholder="your.email@example.com">
-                    </div>
-                    <div class="error-message">Please enter a valid email address</div>
-                </div>
-                <div class="input-row">
-                    <div class="form-group">
-                        <label for="first-name">First Name</label>
-                        <div class="input-icon">
-                            <i class="far fa-user"></i>
-                            <input type="text" id="first-name" placeholder="John">
-                        </div>
-                        <div class="error-message">Please enter your first name</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="last-name">Last Name</label>
-                        <div class="input-icon">
-                            <i class="far fa-user"></i>
-                            <input type="text" id="last-name" placeholder="Doe">
-                        </div>
-                        <div class="error-message">Please enter your last name</div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="address">Address</label>
-                    <div class="input-icon">
-                        <i class="fas fa-home"></i>
-                        <input type="text" id="address" placeholder="123 Main Street">
-                    </div>
-                    <div class="error-message">Please enter your address</div>
-                </div>
-                <div class="input-row">
-                    <div class="form-group">
-                        <label for="city">City</label>
-                        <div class="input-icon">
-                            <i class="fas fa-city"></i>
-                            <input type="text" id="city" placeholder="Kampala">
-                        </div>
-                        <div class="error-message">Please enter your city</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="zip">ZIP Code</label>
-                        <div class="input-icon">
-                            <i class="fas fa-mail-bulk"></i>
-                            <input type="text" id="zip" placeholder="12345">
-                        </div>
-                        <div class="error-message">Please enter a valid ZIP code</div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="country">Country</label>
-                    <div class="input-icon">
-                        <i class="fas fa-globe"></i>
-                        <select id="country">
-                            <option value="">Select your country</option>
-                            <option value="uganda">Uganda</option>
-                            <option value="kenya">Kenya</option>
-                            <option value="tanzania">Tanzania</option>
-                            <option value="rwanda">Rwanda</option>
-                        </select>
-                    </div>
-                    <div class="error-message">Please select your country</div>
+                <div class="instructions">
+                    <h3>How to complete your payment:</h3>
+                    <ol id="payment-instructions">
+                        <li>Select your subscription type</li>
+                        <li>Enter your user name</li>
+                        <li>Select your mobile network provider</li>
+                        <li>Enter your mobile money number</li>
+                        <li>Click "Complete Payment"</li>
+                        <li>Confirm the payment on your phone when prompted</li>
+                    </ol>
                 </div>
                 
                 <button class="btn" id="submit-btn">
                     <i class="fas fa-lock"></i>
-                    Complete Purchase
+                    Complete Payment
                 </button>
                 
                 <div class="guarantee">
@@ -709,10 +707,11 @@
                         <i class="fas fa-tv"></i>
                     </div>
                     <div class="product-info">
-                        <div class="product-title">6 Month IPTV Subscription for 1 Device</div>
+                        <div class="product-title" id="subscription-type-display">New IPTV Subscription</div>
+                        <div class="product-title" id="subscription-type-display">1Device</div>
                         <div class="product-description">Access to 10,000+ channels and VOD</div>
                     </div>
-                    <div class="product-price">390,000 UGX</div>
+                    <div style="font-size: 15px;" class="product-price">390,000 UGX</div>
                 </div>
                 
                 <div class="summary-row">
@@ -721,21 +720,17 @@
                 </div>
                 <div class="summary-row">
                     <div>Tax</div>
-                    <div>0.00 UGX</div>
+                    <div>0</div>
                 </div>
-                <!-- <div class="summary-row">
-                    <div>Shipping</div>
-                    <div>FREE</div>
-                </div> -->
                 
                 <div class="summary-row total">
                     <div>Total</div>
                     <div>390,000 UGX</div>
                 </div>
                 
-                <div style="margin-top: 30px; padding: 20px; background: var(--secondary); border-radius: var(--radius);">
-                    <h3 style="margin-bottom: 15px; border: none; padding: 0;">Why choose APPLE PARK?</h3>
-                    <ul style="margin-left: 20px; color: var(--text-light);">
+                <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: var(--radius);">
+                    <h3 style="margin-bottom: 15px; border: none; padding: 0;">Why choose ApplePark-iptv?</h3>
+                    <ul style="margin-left: 20px; color: #777;">
                         <li style="margin-bottom: 10px;">10,000+ live channels</li>
                         <li style="margin-bottom: 10px;">30,000+ movies and TV shows</li>
                         <li style="margin-bottom: 10px;">4K/FHD/HD quality</li>
@@ -752,54 +747,62 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Payment method selection
-            const paymentOptions = document.querySelectorAll('.payment-option');
-            const paymentDetails = document.querySelectorAll('.payment-details');
-            const submitBtn = document.getElementById('submit-btn');
+            // Subscription type selection
+            const subscriptionOptions = document.querySelectorAll('.subscription-option');
+            const subscriptionTypeDisplay = document.getElementById('subscription-type-display');
             
-            paymentOptions.forEach(option => {
+            subscriptionOptions.forEach(option => {
                 option.addEventListener('click', function() {
-                    // Remove active class from all options
-                    paymentOptions.forEach(opt => opt.classList.remove('active'));
-                    // Add active class to clicked option
+                    subscriptionOptions.forEach(opt => opt.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // Check the radio input
-                    const radio = this.querySelector('input[type="radio"]');
-                    radio.checked = true;
-                    
-                    // Show the corresponding payment details
-                    const method = this.getAttribute('data-method');
-                    paymentDetails.forEach(detail => {
-                        detail.classList.remove('active');
-                    });
-                    document.getElementById(`${method}-details`).classList.add('active');
+                    const type = this.getAttribute('data-type');
+                    subscriptionTypeDisplay.textContent = type === 'new' ? 'New IPTV Subscription' : 'IPTV Subscription Renewal';
                 });
             });
             
-            // Format card number
-            const cardNumberInput = document.getElementById('card-number');
-            if (cardNumberInput) {
-                cardNumberInput.addEventListener('input', function(e) {
-                    let value = e.target.value.replace(/\D/g, '');
-                    if (value.length > 0) {
-                        value = value.match(new RegExp('.{1,4}', 'g')).join(' ');
-                    }
-                    e.target.value = value;
-                });
-            }
+            // Payment method selection
+            const paymentOptions = document.querySelectorAll('.payment-option');
+            const mobileMoneyDetails = document.querySelector('.payment-details.mobile-money');
+            const cardDetails = document.querySelector('.payment-details.card-details');
+            const instructionsList = document.getElementById('payment-instructions');
             
-            // Format expiry date
-            const expiryInput = document.getElementById('expiry-date');
-            if (expiryInput) {
-                expiryInput.addEventListener('input', function(e) {
-                    let value = e.target.value.replace(/\D/g, '');
-                    if (value.length > 2) {
-                        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            const mobileInstructions = [
+                'Select your subscription type',
+                'Enter your user name',
+                'Select your mobile network provider',
+                'Enter your mobile money number',
+                'Click "Complete Payment"',
+                'Confirm the payment on your phone when prompted'
+            ];
+            
+            const cardInstructions = [
+                'Select your subscription type',
+                'Enter your user name',
+                'Enter your card number',
+                'Enter your card expiration date and CVC',
+                'Click "Complete Payment"',
+                'Confirm the payment when prompted'
+            ];
+            
+            paymentOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    paymentOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const paymentType = this.getAttribute('data-payment');
+                    mobileMoneyDetails.classList.remove('active');
+                    cardDetails.classList.remove('active');
+                    
+                    if (paymentType === 'mobile') {
+                        mobileMoneyDetails.classList.add('active');
+                        instructionsList.innerHTML = mobileInstructions.map(item => `<li>${item}</li>`).join('');
+                    } else {
+                        cardDetails.classList.add('active');
+                        instructionsList.innerHTML = cardInstructions.map(item => `<li>${item}</li>`).join('');
                     }
-                    e.target.value = value;
                 });
-            }
+            });
             
             // Mobile number formatting
             const mobileInput = document.getElementById('mobile-number');
@@ -816,11 +819,35 @@
                 });
             }
             
+            // Card number formatting
+            const cardInput = document.getElementById('card-number');
+            if (cardInput) {
+                cardInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 4) {
+                        value = value.match(/.{1,4}/g).join(' ');
+                    }
+                    e.target.value = value;
+                });
+            }
+            
+            // Expiry date formatting
+            const expiryInput = document.getElementById('card-expiry');
+            if (expiryInput) {
+                expiryInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 2) {
+                        value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                    }
+                    e.target.value = value;
+                });
+            }
+            
             // Input validation
             const inputs = document.querySelectorAll('input, select');
             inputs.forEach(input => {
                 input.addEventListener('blur', function() {
-                    if (!this.value) {
+                    if (!this.value && this.closest('.payment-details.active')) {
                         this.classList.add('error');
                     } else {
                         this.classList.remove('error');
@@ -829,30 +856,41 @@
             });
             
             // Form submission
+            const submitBtn = document.getElementById('submit-btn');
             submitBtn.addEventListener('click', function() {
                 let isValid = true;
                 
-                // Check all required fields
-                inputs.forEach(input => {
-                    if (!input.value && input.id !== 'cvv' && input.id !== 'card-name') {
+                // Check user name
+                const customerName = document.getElementById('customer-name');
+                if (!customerName.value) {
+                    customerName.classList.add('error');
+                    isValid = false;
+                } else {
+                    customerName.classList.remove('error');
+                }
+                
+                // Check active payment method fields
+                const activePaymentDetails = document.querySelector('.payment-details.active');
+                const activeInputs = activePaymentDetails.querySelectorAll('input, select');
+                activeInputs.forEach(input => {
+                    if (!input.value) {
                         input.classList.add('error');
                         isValid = false;
+                    } else {
+                        input.classList.remove('error');
                     }
                 });
                 
                 if (isValid) {
-                    // Show loading state
                     this.classList.add('loading');
                     this.innerHTML = 'Processing your payment...';
                     
-                    // Simulate payment processing
                     setTimeout(() => {
                         this.classList.remove('loading');
                         this.classList.add('success');
                         this.innerHTML = '<i class="fas fa-check"></i> Payment Successful!';
                         
-                        // Show success message
-                        alert('Payment processed successfully! Thank you for your purchase.');
+                        alert('Payment processed successfully! You will receive a confirmation message shortly.');
                     }, 2000);
                 }
             });

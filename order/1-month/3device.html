@@ -586,7 +586,7 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="customer-name">Customer Name</label>
+                    <label for="customer-name">User Name</label>
                     <div class="input-icon">
                         <i class="fas fa-user"></i>
                         <input type="text" id="customer-name" placeholder="Enter your name">
@@ -675,7 +675,7 @@
                     <h3>How to complete your payment:</h3>
                     <ol id="payment-instructions">
                         <li>Select your subscription type</li>
-                        <li>Enter your customer name</li>
+                        <li>Enter your user name</li>
                         <li>Select your mobile network provider</li>
                         <li>Enter your mobile money number</li>
                         <li>Click "Complete Payment"</li>
@@ -708,6 +708,7 @@
                     </div>
                     <div class="product-info">
                         <div class="product-title" id="subscription-type-display">New IPTV Subscription</div>
+                        <div class="product-title" id="subscription-type-display">3Devices</div>
                         <div class="product-description">Access to 10,000+ channels and VOD</div>
                     </div>
                     <div style="font-size: 15px;" class="product-price">180,000 UGX</div>
@@ -768,7 +769,7 @@
             
             const mobileInstructions = [
                 'Select your subscription type',
-                'Enter your customer name',
+                'Enter your user name',
                 'Select your mobile network provider',
                 'Enter your mobile money number',
                 'Click "Complete Payment"',
@@ -777,7 +778,7 @@
             
             const cardInstructions = [
                 'Select your subscription type',
-                'Enter your customer name',
+                'Enter your user name',
                 'Enter your card number',
                 'Enter your card expiration date and CVC',
                 'Click "Complete Payment"',
@@ -859,7 +860,7 @@
             submitBtn.addEventListener('click', function() {
                 let isValid = true;
                 
-                // Check customer name
+                // Check user name
                 const customerName = document.getElementById('customer-name');
                 if (!customerName.value) {
                     customerName.classList.add('error');
