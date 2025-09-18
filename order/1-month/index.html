@@ -6,6 +6,7 @@
     <title>Mobile Money and Card Checkout - ApplePark</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Your existing CSS remains the same */
         :root {
             --primary: #4361ee;
             --primary-dark: #3a56d4;
@@ -522,7 +523,7 @@
         .payment-option.active {
             border-color: var(--primary);
             background: var(--secondary);
-            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.1);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 极速加速器, 0.1);
         }
         
         .payment-option i {
@@ -549,6 +550,65 @@
         .payment-details.active {
             display: block;
         }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: var(--radius);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .modal h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            border: none;
+            padding: 0;
+            justify-content: center;
+        }
+        
+        .modal p {
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .modal-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--radius);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .modal-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Validation styles */
+        .validation-info {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
@@ -556,10 +616,8 @@
         <header>
             <div class="logo">
                 <a href="/index.html">
-                <img width="200px" height="200px" src="/wp-content/uploads/2025/05/APPLE PARK LOGO cd-06.png" alt="">
+                <img width="200px" height="200px" src="/wp-content/uploads/2025/05/APPLE PARK LOGO cd-06.png" alt="ApplePark Logo">
                 </a>
-                <!-- <i class="fas fa-tv"></i>
-                APPLEPARK-IPTV -->
             </div>
             <h1>Complete Your Purchase</h1>
             <div class="secure-notice">
@@ -589,9 +647,18 @@
                     <label for="customer-name">User Name</label>
                     <div class="input-icon">
                         <i class="fas fa-user"></i>
-                        <input type="text" id="customer-name" placeholder="Enter your name">
+                        <input type="text" id="customer-name" placeholder="Enter your user name" required>
                     </div>
-                    <div class="error-message">Please enter your name</div>
+                    <div class="error-message">Please enter a valid user name</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="customer-email">Email Address</label>
+                    <div class="input-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="customer-email" placeholder="Enter your email address" required>
+                    </div>
+                    <div class="error-message">Please enter a valid email address</div>
                 </div>
                 
                 <div class="subscription-type payment-methods">
@@ -621,7 +688,7 @@
                         <label for="mobile-provider">Mobile Network Provider</label>
                         <div class="input-icon">
                             <i class="fas fa-sim-card"></i>
-                            <select id="mobile-provider">
+                            <select id="mobile-provider" required>
                                 <option value="">Select your provider</option>
                                 <option value="mtn">MTN Mobile Money</option>
                                 <option value="airtel">Airtel Money</option>
@@ -634,9 +701,10 @@
                         <label for="mobile-number">Mobile Number</label>
                         <div class="input-icon">
                             <i class="fas fa-phone"></i>
-                            <input type="tel" id="mobile-number" placeholder="e.g., 077 123 4567">
+                            <input type="tel" id="mobile-number" placeholder="e.g., 077 123 4567" required pattern="[0-9]{9,10}">
                         </div>
-                        <div class="error-message">Please enter a valid mobile number</div>
+                        <div class="error-message">Please enter a valid mobile number (9-10 digits)</div>
+                        <div class="validation-info">Enter your mobile number without country code</div>
                     </div>
                 </div>
                 
@@ -645,7 +713,7 @@
                         <label for="card-number">Card Number</label>
                         <div class="input-icon">
                             <i class="fas fa-credit-card"></i>
-                            <input type="text" id="card-number" placeholder="1234 5678 9012 3456">
+                            <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required pattern="[0-9]{13,19}">
                         </div>
                         <div class="error-message">Please enter a valid card number</div>
                     </div>
@@ -655,18 +723,18 @@
                             <label for="card-expiry">Expiration Date</label>
                             <div class="input-icon">
                                 <i class="fas fa-calendar"></i>
-                                <input type="text" id="card-expiry" placeholder="MM/YY">
+                                <input type="text" id="card-expiry" placeholder="MM/YY" required pattern="(0[1-9]|1[0-2])\/([0-9]{2})">
                             </div>
-                            <div class="error-message">Please enter a valid expiration date</div>
+                            <div class="error-message">Please enter a valid expiration date (MM/YY)</div>
                         </div>
                         
                         <div class="form-group">
                             <label for="card-cvc">CVC</label>
                             <div class="input-icon">
                                 <i class="fas fa-lock"></i>
-                                <input type="text" id="card-cvc" placeholder="123">
+                                <input type="text" id="card-cvc" placeholder="123" required pattern="[0-9]{3,4}">
                             </div>
-                            <div class="error-message">Please enter a valid CVC</div>
+                            <div class="error-message">Please enter a valid CVC (3-4 digits)</div>
                         </div>
                     </div>
                 </div>
@@ -745,156 +813,325 @@
         </footer>
     </div>
 
+    <!-- Success Modal -->
+    <div class="modal" id="success-modal">
+        <div class="modal-content">
+            <h2><i class="fas fa-check-circle"></i> Payment Successful!</h2>
+            <p>Thank you for your purchase. Your payment has been processed successfully. You will receive a confirmation email shortly.</p>
+            <button class="modal-btn" id="modal-ok-btn">OK</button>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="modal" id="error-modal">
+        <div class="modal-content">
+            <h2><i class="fas fa-exclamation-circle"></i> Payment Failed</h2>
+            <p id="error-message">There was an issue processing your payment. Please try again.</p>
+            <button class="modal-btn" id="modal-retry-btn">Try Again</button>
+        </div>
+    </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Subscription type selection
-            const subscriptionOptions = document.querySelectorAll('.subscription-option');
-            const subscriptionTypeDisplay = document.getElementById('subscription-type-display');
-            
-            subscriptionOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    subscriptionOptions.forEach(opt => opt.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    const type = this.getAttribute('data-type');
-                    subscriptionTypeDisplay.textContent = type === 'new' ? 'New IPTV Subscription' : 'IPTV Subscription Renewal';
-                });
-            });
-            
-            // Payment method selection
-            const paymentOptions = document.querySelectorAll('.payment-option');
-            const mobileMoneyDetails = document.querySelector('.payment-details.mobile-money');
-            const cardDetails = document.querySelector('.payment-details.card-details');
-            const instructionsList = document.getElementById('payment-instructions');
-            
-            const mobileInstructions = [
-                'Select your subscription type',
-                'Enter your user name',
-                'Select your mobile network provider',
-                'Enter your mobile money number',
-                'Click "Complete Payment"',
-                'Confirm the payment on your phone when prompted'
-            ];
-            
-            const cardInstructions = [
-                'Select your subscription type',
-                'Enter your user name',
-                'Enter your card number',
-                'Enter your card expiration date and CVC',
-                'Click "Complete Payment"',
-                'Confirm the payment when prompted'
-            ];
-            
-            paymentOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    paymentOptions.forEach(opt => opt.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    const paymentType = this.getAttribute('data-payment');
-                    mobileMoneyDetails.classList.remove('active');
-                    cardDetails.classList.remove('active');
-                    
-                    if (paymentType === 'mobile') {
-                        mobileMoneyDetails.classList.add('active');
-                        instructionsList.innerHTML = mobileInstructions.map(item => `<li>${item}</li>`).join('');
-                    } else {
-                        cardDetails.classList.add('active');
-                        instructionsList.innerHTML = cardInstructions.map(item => `<li>${item}</li>`).join('');
-                    }
-                });
-            });
-            
-            // Mobile number formatting
-            const mobileInput = document.getElementById('mobile-number');
-            if (mobileInput) {
-                mobileInput.addEventListener('input', function(e) {
-                    let value = e.target.value.replace(/\D/g, '');
-                    if (value.length > 3) {
-                        value = value.substring(0, 3) + ' ' + value.substring(3);
-                    }
-                    if (value.length > 7) {
-                        value = value.substring(0, 7) + ' ' + value.substring(7);
-                    }
-                    e.target.value = value;
-                });
-            }
-            
-            // Card number formatting
-            const cardInput = document.getElementById('card-number');
-            if (cardInput) {
-                cardInput.addEventListener('input', function(e) {
-                    let value = e.target.value.replace(/\D/g, '');
-                    if (value.length > 4) {
-                        value = value.match(/.{1,4}/g).join(' ');
-                    }
-                    e.target.value = value;
-                });
-            }
-            
-            // Expiry date formatting
-            const expiryInput = document.getElementById('card-expiry');
-            if (expiryInput) {
-                expiryInput.addEventListener('input', function(e) {
-                    let value = e.target.value.replace(/\D/g, '');
-                    if (value.length > 2) {
-                        value = value.substring(0, 2) + '/' + value.substring(2, 4);
-                    }
-                    e.target.value = value;
-                });
-            }
-            
-            // Input validation
-            const inputs = document.querySelectorAll('input, select');
-            inputs.forEach(input => {
-                input.addEventListener('blur', function() {
-                    if (!this.value && this.closest('.payment-details.active')) {
-                        this.classList.add('error');
-                    } else {
-                        this.classList.remove('error');
-                    }
-                });
-            });
-            
-            // Form submission
-            const submitBtn = document.getElementById('submit-btn');
-            submitBtn.addEventListener('click', function() {
-                let isValid = true;
-                
-                // Check user name
-                const customerName = document.getElementById('customer-name');
-                if (!customerName.value) {
-                    customerName.classList.add('error');
-                    isValid = false;
-                } else {
-                    customerName.classList.remove('error');
-                }
-                
-                // Check active payment method fields
-                const activePaymentDetails = document.querySelector('.payment-details.active');
-                const activeInputs = activePaymentDetails.querySelectorAll('input, select');
-                activeInputs.forEach(input => {
-                    if (!input.value) {
-                        input.classList.add('error');
-                        isValid = false;
-                    } else {
-                        input.classList.remove('error');
-                    }
-                });
-                
-                if (isValid) {
-                    this.classList.add('loading');
-                    this.innerHTML = 'Processing your payment...';
-                    
-                    setTimeout(() => {
-                        this.classList.remove('loading');
-                        this.classList.add('success');
-                        this.innerHTML = '<i class="fas fa-check"></i> Payment Successful!';
-                        
-                        alert('Payment processed successfully! You will receive a confirmation message shortly.');
-                    }, 2000);
-                }
-            });
+const BACKEND_URL = 'https://applepark-backend.onrender.com'; // your deployed backend
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Subscription type selection
+    const subscriptionOptions = document.querySelectorAll('.subscription-option');
+    const subscriptionTypeDisplay = document.getElementById('subscription-type-display');
+
+    subscriptionOptions.forEach(option => {
+        option.addEventListener('click', function () {
+            subscriptionOptions.forEach(opt => opt.classList.remove('active'));
+            this.classList.add('active');
+            const type = this.getAttribute('data-type');
+            subscriptionTypeDisplay.textContent = type === 'new' ? 'New IPTV Subscription' : 'IPTV Subscription Renewal';
         });
-    </script>
+    });
+
+    // Payment method selection
+    const paymentOptions = document.querySelectorAll('.payment-option');
+    const mobileMoneyDetails = document.querySelector('.payment-details.mobile-money');
+    const cardDetails = document.querySelector('.payment-details.card-details');
+    const instructionsList = document.getElementById('payment-instructions');
+
+    const mobileInstructions = [
+        'Select your subscription type',
+        'Enter your name and email',
+        'Select your mobile network provider',
+        'Enter your mobile money number',
+        'Click "Complete Payment"',
+        'Confirm the payment on your phone when prompted'
+    ];
+
+    const cardInstructions = [
+        'Select your subscription type',
+        'Enter your name and email',
+        'Enter your card number',
+        'Enter your card expiration date and CVC',
+        'Click "Complete Payment"',
+        'Confirm the payment when prompted'
+    ];
+
+    paymentOptions.forEach(option => {
+        option.addEventListener('click', function () {
+            paymentOptions.forEach(opt => opt.classList.remove('active'));
+            this.classList.add('active');
+            const paymentType = this.getAttribute('data-payment');
+            mobileMoneyDetails.classList.remove('active');
+            cardDetails.classList.remove('active');
+            if (paymentType === 'mobile') {
+                mobileMoneyDetails.classList.add('active');
+                instructionsList.innerHTML = mobileInstructions.map(i => `<li>${i}</li>`).join('');
+            } else {
+                cardDetails.classList.add('active');
+                instructionsList.innerHTML = cardInstructions.map(i => `<li>${i}</li>`).join('');
+            }
+        });
+    });
+
+    // Form validation functions
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    function validatePhone(phone) {
+        const re = /^[0-9]{9,10}$/;
+        return re.test(phone.replace(/\s/g, ''));
+    }
+
+    function validateCardNumber(cardNumber) {
+        const re = /^[0-9]{13,19}$/;
+        return re.test(cardNumber.replace(/\s/g, ''));
+    }
+
+    function validateExpiry(expiry) {
+        const re = /^(0[1-9]|1[0-2])\/([0-9]{2})$/;
+        if (!re.test(expiry)) return false;
+        
+        const [month, year] = expiry.split('/');
+        const now = new Date();
+        const currentYear = now.getFullYear() % 100;
+        const currentMonth = now.getMonth() + 1;
+        
+        return parseInt(year) > currentYear || 
+               (parseInt(year) === currentYear && parseInt(month) >= currentMonth);
+    }
+
+    function validateCVC(cvc) {
+        const re = /^[0-9]{3,4}$/;
+        return re.test(cvc);
+    }
+
+    function showError(input, message) {
+        input.classList.add('error');
+        const errorElement = input.nextElementSibling;
+        if (errorElement && errorElement.classList.contains('error-message')) {
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+        return false;
+    }
+
+    function clearError(input) {
+        input.classList.remove('error');
+        const errorElement = input.nextElementSibling;
+        if (errorElement && errorElement.classList.contains('error-message')) {
+            errorElement.style.display = 'none';
+        }
+    }
+
+    function validateForm() {
+        let isValid = true;
+        const nameInput = document.getElementById('customer-name');
+        const emailInput = document.getElementById('customer-email');
+        
+        // Validate name
+        if (!nameInput.value.trim()) {
+            showError(nameInput, 'Please enter your user name');
+            isValid = false;
+        } else {
+            clearError(nameInput);
+        }
+        
+        // Validate email
+        if (!validateEmail(emailInput.value)) {
+            showError(emailInput, 'Please enter a valid email address');
+            isValid = false;
+        } else {
+            clearError(emailInput);
+        }
+        
+        // Validate payment method specific fields
+        const paymentMethod = document.querySelector('.payment-option.active').getAttribute('data-payment');
+        
+        if (paymentMethod === 'mobile') {
+            const providerSelect = document.getElementById('mobile-provider');
+            const phoneInput = document.getElementById('mobile-number');
+            
+            if (!providerSelect.value) {
+                showError(providerSelect, 'Please select a provider');
+                isValid = false;
+            } else {
+                clearError(providerSelect);
+            }
+            
+            if (!validatePhone(phoneInput.value)) {
+                showError(phoneInput, 'Please enter a valid mobile number');
+                isValid = false;
+            } else {
+                clearError(phoneInput);
+            }
+        } else {
+            const cardNumberInput = document.getElementById('card-number');
+            const expiryInput = document.getElementById('card-expiry');
+            const cvcInput = document.getElementById('card-cvc');
+            
+            if (!validateCardNumber(cardNumberInput.value)) {
+                showError(cardNumberInput, 'Please enter a valid card number');
+                isValid = false;
+            } else {
+                clearError(cardNumberInput);
+            }
+            
+            if (!validateExpiry(expiryInput.value)) {
+                showError(expiryInput, 'Please enter a valid expiration date');
+                isValid = false;
+            } else {
+                clearError(expiryInput);
+            }
+            
+            if (!validateCVC(cvcInput.value)) {
+                showError(cvcInput, 'Please enter a valid CVC');
+                isValid = false;
+            } else {
+                clearError(cvcInput);
+            }
+        }
+        
+        return isValid;
+    }
+
+    // Submit handler
+    const submitBtn = document.getElementById('submit-btn');
+    const successModal = document.getElementById('success-modal');
+    const errorModal = document.getElementById('error-modal');
+    const errorMessage = document.getElementById('error-message');
+
+    function generateReference() {
+        return 'AP' + Date.now(); // unique transaction reference
+    }
+
+    submitBtn.addEventListener('click', async function () {
+        // Validate form
+        if (!validateForm()) {
+            return;
+        }
+        
+        submitBtn.classList.add('loading');
+
+        const subscriptionType = document.querySelector('.subscription-option.active').getAttribute('data-type');
+        const paymentMethod = document.querySelector('.payment-option.active').getAttribute('data-payment');
+        const name = document.getElementById('customer-name').value.trim();
+        const email = document.getElementById('customer-email').value.trim();
+
+        const payload = {
+            reference: generateReference(),
+            name,
+            email,
+            phone: paymentMethod === 'mobile' ? document.getElementById('mobile-number').value.trim() : '',
+            amount: 65000,
+            currency: 'UGX',
+            payment_method: paymentMethod,
+            provider: paymentMethod === 'mobile' ? document.getElementById('mobile-provider').value : '',
+            subscription_type: subscriptionType,
+            device_count: 1
+        };
+
+        // Add card details if payment method is card
+        if (paymentMethod === 'card') {
+            payload.card_number = document.getElementById('card-number').value.replace(/\s/g, '');
+            payload.card_expiry = document.getElementById('card-expiry').value;
+            payload.card_cvc = document.getElementById('card-cvc').value;
+        }
+
+        try {
+            const res = await fetch(`${BACKEND_URL}/api/pay`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                successModal.style.display = 'flex';
+            } else {
+                errorMessage.textContent = data.message || 'Payment failed. Please try again.';
+                errorModal.style.display = 'flex';
+            }
+        } catch (err) {
+            console.error('Payment error:', err);
+            errorMessage.textContent = 'Network error. Please check your connection and try again.';
+            errorModal.style.display = 'flex';
+        } finally {
+            submitBtn.classList.remove('loading');
+        }
+    });
+
+    // Input validation on blur
+    document.getElementById('customer-email').addEventListener('blur', function() {
+        if (this.value && !validateEmail(this.value)) {
+            showError(this, 'Please enter a valid email address');
+        } else {
+            clearError(this);
+        }
+    });
+
+    document.getElementById('mobile-number').addEventListener('blur', function() {
+        if (this.value && !validatePhone(this.value)) {
+            showError(this, 'Please enter a valid mobile number');
+        } else {
+            clearError(this);
+        }
+    });
+
+    document.getElementById('card-number').addEventListener('blur', function() {
+        if (this.value && !validateCardNumber(this.value)) {
+            showError(this, 'Please enter a valid card number');
+        } else {
+            clearError(this);
+        }
+    });
+
+    document.getElementById('card-expiry').addEventListener('blur', function() {
+        if (this.value && !validateExpiry(this.value)) {
+            showError(this, 'Please enter a valid expiration date');
+        } else {
+            clearError(this);
+        }
+    });
+
+    document.getElementById('card-cvc').addEventListener('blur', function() {
+        if (this.value && !validateCVC(this.value)) {
+            showError(this, 'Please enter a valid CVC');
+        } else {
+            clearError(this);
+        }
+    });
+
+    // Close modals
+    document.getElementById('modal-ok-btn').addEventListener('click', () => {
+        successModal.style.display = 'none';
+        // Optionally redirect to a success page or reset the form
+    });
+    
+    document.getElementById('modal-retry-btn').addEventListener('click', () => {
+        errorModal.style.display = 'none';
+    });
+});
+</script>
 </body>
 </html>
