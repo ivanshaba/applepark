@@ -287,6 +287,7 @@
         
         .product-info {
             flex: 1;
+            padding-right: 10px;
         }
         
         .product-title {
@@ -549,6 +550,129 @@
         .payment-details.active {
             display: block;
         }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: var(--radius);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+        
+        .modal h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            border: none;
+            padding: 0;
+            justify-content: center;
+        }
+        
+        .modal p {
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .modal-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--radius);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .modal-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Validation styles */
+        .validation-info {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        /* Pending Modal Styles */
+        #pendingModal .modal-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Checkmark Animation Styles */
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            margin: 20px auto;
+            display: none;
+        }
+        
+        .checkmark__circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 4;
+            stroke: #28a745;
+            fill: none;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        
+        .checkmark__check {
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            stroke-width: 4;
+            stroke: #28a745;
+            fill: none;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.6s forwards;
+        }
+        
+        @keyframes stroke {
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+        
+        .coming-soon {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+        }
+        
+        .coming-soon p {
+            margin: 0;
+            color: var(--text-light);
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -556,10 +680,8 @@
         <header>
             <div class="logo">
                 <a href="/index.html">
-                <img width="200px" height="200px" src="/wp-content/uploads/2025/05/APPLE PARK LOGO cd-06.png" alt="">
+                <img width="200px" height="200px" src="/wp-content/uploads/2025/05/APPLE PARK LOGO cd-06.png" alt="ApplePark Logo">
                 </a>
-                <!-- <i class="fas fa-tv"></i>
-                APPLEPARK-IPTV -->
             </div>
             <h1>Complete Your Purchase</h1>
             <div class="secure-notice">
@@ -579,23 +701,32 @@
                         <p>Start a new IPTV service</p>
                     </div>
                     <div class="subscription-option" data-type="renew">
-                        <i class="fas fa-sync-alt"></i>
+                        <class="fasfa-sync-alt"></i>
                         <h3>Renew Subscription</h3>
                         <p>Extend your existing service</p>
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <label for="customer-name">user name</label>
+                    <label for="customer-name">User Name</label>
                     <div class="input-icon">
                         <i class="fas fa-user"></i>
-                        <input type="text" id="customer-name" placeholder="Enter your name">
+                        <input type="text" id="customer-name" placeholder="Enter your user name" required>
                     </div>
-                    <div class="error-message">Please enter your name</div>
+                    <div class="error-message">Please enter a valid user name</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="customer-email">Email Address</label>
+                    <div class="input-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="customer-email" placeholder="Enter your email address" required>
+                    </div>
+                    <div class="error-message">Please enter a valid email address</div>
                 </div>
                 
                 <div class="subscription-type payment-methods">
-                    <div class="payment-option active" data-payment="mobile">
+                    <div class="payment-option active" data-payment="mobile_money">
                         <i class="fas fa-mobile-alt"></i>
                         <h3>Mobile Money</h3>
                         <p>Pay via mobile network</p>
@@ -621,7 +752,7 @@
                         <label for="mobile-provider">Mobile Network Provider</label>
                         <div class="input-icon">
                             <i class="fas fa-sim-card"></i>
-                            <select id="mobile-provider">
+                            <select id="mobile-provider" required>
                                 <option value="">Select your provider</option>
                                 <option value="mtn">MTN Mobile Money</option>
                                 <option value="airtel">Airtel Money</option>
@@ -634,20 +765,24 @@
                         <label for="mobile-number">Mobile Number</label>
                         <div class="input-icon">
                             <i class="fas fa-phone"></i>
-                            <input type="tel" id="mobile-number" placeholder="e.g., 077 123 4567">
+                            <input type="tel" id="mobile-number" placeholder="e.g., 077 123 4567 or 712345678" required>
                         </div>
-                        <div class="error-message">Please enter a valid mobile number</div>
+                        <div class="error-message">Please enter a valid Ugandan mobile number</div>
+                        <div class="validation-info">Enter your Ugandan number (e.g., 0771234567, 712345678, or +256771234567)</div>
                     </div>
                 </div>
                 
                 <div class="payment-details card-details">
+                    <div class="coming-soon">
+                        <p><i class="fas fa-info-circle"></i> Card payments are coming soon. Please use Mobile Money for now.</p>
+                    </div>
+                    
                     <div class="form-group">
                         <label for="card-number">Card Number</label>
                         <div class="input-icon">
                             <i class="fas fa-credit-card"></i>
-                            <input type="text" id="card-number" placeholder="1234 5678 9012 3456">
+                            <input type="text" id="card-number" placeholder="1234 5678 9012 3456" disabled>
                         </div>
-                        <div class="error-message">Please enter a valid card number</div>
                     </div>
                     
                     <div class="input-row">
@@ -655,18 +790,16 @@
                             <label for="card-expiry">Expiration Date</label>
                             <div class="input-icon">
                                 <i class="fas fa-calendar"></i>
-                                <input type="text" id="card-expiry" placeholder="MM/YY">
+                                <input type="text" id="card-expiry" placeholder="MM/YY" disabled>
                             </div>
-                            <div class="error-message">Please enter a valid expiration date</div>
                         </div>
                         
                         <div class="form-group">
                             <label for="card-cvc">CVC</label>
                             <div class="input-icon">
                                 <i class="fas fa-lock"></i>
-                                <input type="text" id="card-cvc" placeholder="123">
+                                <input type="text" id="card-cvc" placeholder="123" disabled>
                             </div>
-                            <div class="error-message">Please enter a valid CVC</div>
                         </div>
                     </div>
                 </div>
@@ -675,7 +808,7 @@
                     <h3>How to complete your payment:</h3>
                     <ol id="payment-instructions">
                         <li>Select your subscription type</li>
-                        <li>Enter your user name</li>
+                        <li>Enter your user name and email</li>
                         <li>Select your mobile network provider</li>
                         <li>Enter your mobile money number</li>
                         <li>Click "Complete Payment"</li>
@@ -708,15 +841,14 @@
                     </div>
                     <div class="product-info">
                         <div class="product-title" id="subscription-type-display">New IPTV Subscription</div>
-                        <div class="product-title" id="subscription-type-display">3Devices</div>
                         <div class="product-description">Access to 10,000+ channels and VOD</div>
                     </div>
-                    <div style="font-size: 15px;" class="product-price">1,080,000 UGX</div>
+                    <div class="product-price">1.080.000</div> <div style="color: blue; font-weight: bold; margin-left: 2px;">UGX</div>
                 </div>
                 
                 <div class="summary-row">
                     <div>Subtotal</div>
-                    <div>1,080,000 UGX</div>
+                    <div>1.080.000</div><div style="color: blue; font-weight: bold; margin-left: 2px;">UGX</div>
                 </div>
                 <div class="summary-row">
                     <div>Tax</div>
@@ -725,7 +857,7 @@
                 
                 <div class="summary-row total">
                     <div>Total</div>
-                    <div>1,080,000 UGX</div>
+                    <div>1.080.000</div><div style="color: blue; font-weight: bold; margin-left: 2px;">UGX</div>
                 </div>
                 
                 <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: var(--radius);">
@@ -745,156 +877,299 @@
         </footer>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Subscription type selection
-            const subscriptionOptions = document.querySelectorAll('.subscription-option');
-            const subscriptionTypeDisplay = document.getElementById('subscription-type-display');
-            
-            subscriptionOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    subscriptionOptions.forEach(opt => opt.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    const type = this.getAttribute('data-type');
-                    subscriptionTypeDisplay.textContent = type === 'new' ? 'New IPTV Subscription' : 'IPTV Subscription Renewal';
-                });
-            });
-            
-            // Payment method selection
-            const paymentOptions = document.querySelectorAll('.payment-option');
-            const mobileMoneyDetails = document.querySelector('.payment-details.mobile-money');
-            const cardDetails = document.querySelector('.payment-details.card-details');
-            const instructionsList = document.getElementById('payment-instructions');
-            
-            const mobileInstructions = [
-                'Select your subscription type',
-                'Enter your user name',
-                'Select your mobile network provider',
-                'Enter your mobile money number',
-                'Click "Complete Payment"',
-                'Confirm the payment on your phone when prompted'
-            ];
-            
-            const cardInstructions = [
-                'Select your subscription type',
-                'Enter your user name',
-                'Enter your card number',
-                'Enter your card expiration date and CVC',
-                'Click "Complete Payment"',
-                'Confirm the payment when prompted'
-            ];
-            
-            paymentOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    paymentOptions.forEach(opt => opt.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    const paymentType = this.getAttribute('data-payment');
-                    mobileMoneyDetails.classList.remove('active');
-                    cardDetails.classList.remove('active');
-                    
-                    if (paymentType === 'mobile') {
-                        mobileMoneyDetails.classList.add('active');
-                        instructionsList.innerHTML = mobileInstructions.map(item => `<li>${item}</li>`).join('');
-                    } else {
-                        cardDetails.classList.add('active');
-                        instructionsList.innerHTML = cardInstructions.map(item => `<li>${item}</li>`).join('');
-                    }
-                });
-            });
-            
-            // Mobile number formatting
-            const mobileInput = document.getElementById('mobile-number');
-            if (mobileInput) {
-                mobileInput.addEventListener('input', function(e) {
-                    let value = e.target.value.replace(/\D/g, '');
-                    if (value.length > 3) {
-                        value = value.substring(0, 3) + ' ' + value.substring(3);
-                    }
-                    if (value.length > 7) {
-                        value = value.substring(0, 7) + ' ' + value.substring(7);
-                    }
-                    e.target.value = value;
-                });
-            }
-            
-            // Card number formatting
-            const cardInput = document.getElementById('card-number');
-            if (cardInput) {
-                cardInput.addEventListener('input', function(e) {
-                    let value = e.target.value.replace(/\D/g, '');
-                    if (value.length > 4) {
-                        value = value.match(/.{1,4}/g).join(' ');
-                    }
-                    e.target.value = value;
-                });
-            }
-            
-            // Expiry date formatting
-            const expiryInput = document.getElementById('card-expiry');
-            if (expiryInput) {
-                expiryInput.addEventListener('input', function(e) {
-                    let value = e.target.value.replace(/\D/g, '');
-                    if (value.length > 2) {
-                        value = value.substring(0, 2) + '/' + value.substring(2, 4);
-                    }
-                    e.target.value = value;
-                });
-            }
-            
-            // Input validation
-            const inputs = document.querySelectorAll('input, select');
-            inputs.forEach(input => {
-                input.addEventListener('blur', function() {
-                    if (!this.value && this.closest('.payment-details.active')) {
-                        this.classList.add('error');
-                    } else {
-                        this.classList.remove('error');
-                    }
-                });
-            });
-            
-            // Form submission
-            const submitBtn = document.getElementById('submit-btn');
-            submitBtn.addEventListener('click', function() {
-                let isValid = true;
-                
-                // Check user name
-                const customerName = document.getElementById('customer-name');
-                if (!customerName.value) {
-                    customerName.classList.add('error');
-                    isValid = false;
-                } else {
-                    customerName.classList.remove('error');
-                }
-                
-                // Check active payment method fields
-                const activePaymentDetails = document.querySelector('.payment-details.active');
-                const activeInputs = activePaymentDetails.querySelectorAll('input, select');
-                activeInputs.forEach(input => {
-                    if (!input.value) {
-                        input.classList.add('error');
-                        isValid = false;
-                    } else {
-                        input.classList.remove('error');
-                    }
-                });
-                
-                if (isValid) {
-                    this.classList.add('loading');
-                    this.innerHTML = 'Processing your payment...';
-                    
-                    setTimeout(() => {
-                        this.classList.remove('loading');
-                        this.classList.add('success');
-                        this.innerHTML = '<i class="fas fa-check"></i> Payment Successful!';
-                        
-                        alert('Payment processed successfully! You will receive a confirmation message shortly.');
-                    }, 2000);
-                }
-            });
+    <!-- Pending Modal -->
+    <div class="modal" id="pendingModal">
+        <div class="modal-content">
+            <h2>Processing Payment...</h2>
+            <!-- Animated Checkmark -->
+            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                <path class="checkmark__check" fill="none" d="M14 27l7 7 16-16"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('successModal')">&times;</span>
+            <h2>Payment Successful!</h2>
+            <p>Thank you for your purchase. Your order has been confirmed.</p>
+            <button class="modal-btn" onclick="closeModal('successModal')">OK</button>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="modal" id="errorModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('errorModal')">&times;</span>
+            <h2><i class="fas fa-exclamation-circle"></i> Payment Failed</h2>
+            <p id="error-message">There was an issue processing your payment. Please try again.</p>
+            <button class="modal-btn" id="modal-retry-btn">Try Again</button>
+        </div>
+    </div>
+
+<script>
+const BACKEND_URL = 'https://applepark-backend.onrender.com'; // your deployed backend
+
+// Global function to close modals
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Subscription type selection
+    const subscriptionOptions = document.querySelectorAll('.subscription-option');
+    const subscriptionTypeDisplay = document.getElementById('subscription-type-display');
+
+    subscriptionOptions.forEach(option => {
+        option.addEventListener('click', function () {
+            subscriptionOptions.forEach(opt => opt.classList.remove('active'));
+            this.classList.add('active');
+            const type = this.getAttribute('data-type');
+            subscriptionTypeDisplay.textContent = type === 'new' ? 'New IPTV Subscription' : 'IPTV Subscription Renewal';
         });
-    </script>
+    });
+
+    // Payment method selection
+    const paymentOptions = document.querySelectorAll('.payment-option');
+    const mobileMoneyDetails = document.querySelector('.payment-details.mobile-money');
+    const cardDetails = document.querySelector('.payment-details.card-details');
+    const instructionsList = document.getElementById('payment-instructions');
+
+    const mobileInstructions = [
+        'Select your subscription type',
+        'Enter your name and email',
+        'Select your mobile network provider',
+        'Enter your mobile money number',
+        'Click "Complete Payment"',
+        'Confirm the payment on your phone when prompted'
+    ];
+
+    const cardInstructions = [
+        'Select your subscription type',
+        'Enter your name and email',
+        'Card payments are coming soon',
+        'Please use Mobile Money for now',
+        'We appreciate your understanding'
+    ];
+
+    paymentOptions.forEach(option => {
+        option.addEventListener('click', function () {
+            paymentOptions.forEach(opt => opt.classList.remove('active'));
+            this.classList.add('active');
+            const paymentType = this.getAttribute('data-payment');
+            mobileMoneyDetails.classList.remove('active');
+            cardDetails.classList.remove('active');
+            
+            if (paymentType === 'mobile_money') {
+                mobileMoneyDetails.classList.add('active');
+                instructionsList.innerHTML = mobileInstructions.map(i => `<li>${i}</li>`).join('');
+            } else {
+                cardDetails.classList.add('active');
+                instructionsList.innerHTML = cardInstructions.map(i => `<li>${i}</li>`).join('');
+            }
+        });
+    });
+
+    // Form validation functions
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    function validatePhone(phone) {
+        const cleaned = phone.replace(/[^\d+]/g, '');
+        const re = /^\+256\d{9}$/;
+        const localFormat = /^(0?7\d{8})$/;
+        return re.test(cleaned) || localFormat.test(cleaned);
+    }
+
+    function normalizePhone(phone) {
+        let cleaned = phone.replace(/[^\d+]/g, '');
+        if (cleaned.startsWith('+256')) return cleaned;
+        if (cleaned.startsWith('07')) return '+256' + cleaned.substring(1);
+        if (cleaned.startsWith('7')) return '+256' + cleaned;
+        return phone;
+    }
+
+    function formatPhoneInput(input) {
+        let value = input.value.replace(/\D/g, '');
+        if (value.startsWith('256')) input.value = '+' + value;
+        else if (value.startsWith('0')) input.value = value;
+        else if (value.length > 0) input.value = value;
+        if (input.value && !validatePhone(input.value)) input.classList.add('error');
+        else input.classList.remove('error');
+    }
+
+    document.getElementById('mobile-number').addEventListener('input', function() {
+        formatPhoneInput(this);
+    });
+
+    function showError(input, message) {
+        input.classList.add('error');
+        const errorElement = input.nextElementSibling;
+        if (errorElement && errorElement.classList.contains('error-message')) {
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+        return false;
+    }
+
+    function clearError(input) {
+        input.classList.remove('error');
+        const errorElement = input.nextElementSibling;
+        if (errorElement && errorElement.classList.contains('error-message')) {
+            errorElement.style.display = 'none';
+        }
+    }
+
+    function validateForm() {
+        let isValid = true;
+        const nameInput = document.getElementById('customer-name');
+        const emailInput = document.getElementById('customer-email');
+
+        if (!nameInput.value.trim()) { showError(nameInput, 'Please enter your user name'); isValid = false; }
+        else clearError(nameInput);
+
+        if (!validateEmail(emailInput.value)) { showError(emailInput, 'Please enter a valid email address'); isValid = false; }
+        else clearError(emailInput);
+
+        const paymentMethod = document.querySelector('.payment-option.active').getAttribute('data-payment');
+
+        if (paymentMethod === 'mobile_money') {
+            const providerSelect = document.getElementById('mobile-provider');
+            const phoneInput = document.getElementById('mobile-number');
+
+            if (!providerSelect.value) { showError(providerSelect, 'Please select a provider'); isValid = false; }
+            else clearError(providerSelect);
+
+            if (!validatePhone(phoneInput.value)) { showError(phoneInput, 'Please enter a valid Ugandan number (e.g., 0771234567, 712345678, or +256771234567)'); isValid = false; }
+            else clearError(phoneInput);
+        }
+
+        return isValid;
+    }
+
+    // Modal functionality
+    const pendingModal = document.getElementById('pendingModal');
+    const successModal = document.getElementById('successModal');
+    const errorModal = document.getElementById('errorModal');
+    const errorMessage = document.getElementById('error-message');
+
+    function showSuccessCheckmark() {
+        const checkmark = document.querySelector('#pendingModal .checkmark');
+        checkmark.style.display = 'block';
+        
+        // Animate the checkmark
+        const circle = checkmark.querySelector('.checkmark__circle');
+        const check = checkmark.querySelector('.checkmark__check');
+        
+        circle.style.animation = 'stroke 0.6s cubic-bezier(.65,.05,.36,1) forwards';
+        check.style.animation = 'stroke 0.3s cubic-bezier(.65,.05,.36,1) 0.6s forwards';
+
+        setTimeout(() => {
+            pendingModal.style.display = 'none';
+            successModal.style.display = 'flex';
+        }, 1200);
+    }
+
+    // Submit handler
+    const submitBtn = document.getElementById('submit-btn');
+
+    function generateReference() {
+        return 'AP' + Date.now();
+    }
+
+    submitBtn.addEventListener('click', async function () {
+        if (!validateForm()) return;
+        
+        const paymentMethod = document.querySelector('.payment-option.active').getAttribute('data-payment');
+        
+        // If card is selected, show message and return
+        if (paymentMethod === 'card') {
+            errorMessage.textContent = 'Card payments are coming soon. Please use Mobile Money for now.';
+            errorModal.style.display = 'flex';
+            return;
+        }
+        
+        submitBtn.classList.add('loading');
+
+        // Show pending modal
+        pendingModal.style.display = 'flex';
+
+        const subscriptionType = document.querySelector('.subscription-option.active').getAttribute('data-type');
+        const name = document.getElementById('customer-name').value.trim();
+        const email = document.getElementById('customer-email').value.trim();
+        const phone = document.getElementById('mobile-number').value.trim();
+        const provider = document.getElementById('mobile-provider').value;
+        const amountText = document.querySelector('.product-price').textContent;
+        const amount = parseInt(amountText.replace(/[^0-9]/g, ''));
+
+        const payload = {
+            reference: generateReference(),
+            name,
+            email,
+            phone: normalizePhone(phone),
+            amount,
+            currency: 'UGX',
+            payment_method: 'mobile_money',
+            provider,
+            subscription_type: subscriptionType,
+            device_count: 1
+        };
+
+        try {
+            const res = await fetch(`${BACKEND_URL}/api/pay`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            
+            let data;
+            try {
+                data = await res.json();
+            } catch (e) {
+                console.error('Failed to parse response:', e);
+                throw new Error('Invalid response from server');
+            }
+
+            if (res.ok) {
+                // Show success animation and then success modal
+                showSuccessCheckmark();
+            } else { 
+                pendingModal.style.display = 'none';
+                errorMessage.textContent = data.message || 'Payment failed. Please try again.'; 
+                errorModal.style.display = 'flex'; 
+            }
+        } catch (err) {
+            console.error('Payment error:', err);
+            pendingModal.style.display = 'none';
+            errorMessage.textContent = err.message || 'Network error. Please check your connection and try again.';
+            errorModal.style.display = 'flex';
+        } finally {
+            submitBtn.classList.remove('loading');
+        }
+    });
+
+
+
+
+    
+
+    // Close modals with event listeners
+    document.getElementById('modal-retry-btn').addEventListener('click', function() {
+        errorModal.style.display = 'none';
+    });
+
+    // Also allow closing modals by clicking outside the content
+    window.addEventListener('click', function(event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.style.display = 'none';
+        }
+    });
+});
+</script>
+
 </body>
 </html>
